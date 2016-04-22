@@ -38,15 +38,20 @@ angular.module('indexApp', ['ngAnimate', 'ui.bootstrap']).controller('indedxCont
     if (checkValid(reservDate)) {
       for (var n = 0; n < reservDate.length;n++) {
         if (room[selectedRoom][createTimestamp(reservDate[n])]) {
-          room[selectedRoom][createTimestamp(reservDate[n])] = {
-            date: new Date(reservDate[n]),
-            status: 'full-day'
-          }
+          room[selectedRoom][createTimestamp(reservDate[n])].date = new Date(reservDate[n])
+          room[selectedRoom][createTimestamp(reservDate[n])].status = 'full-day'
         } else {
           if (n === 0 || n === reservDate.length - 1) {
+            var str
+            if (n === 0) {
+              str = 'in'
+            } else {
+              str = 'out'
+            }
             room[selectedRoom][createTimestamp(reservDate[n])] = {
               date: new Date(reservDate[n]),
-              status: 'half-day'
+              status: 'half-day',
+              inorout: str
             }
           } else {
             room[selectedRoom][createTimestamp(reservDate[n])] = {
@@ -69,8 +74,9 @@ angular.module('indexApp', ['ngAnimate', 'ui.bootstrap']).controller('indedxCont
       console.log(createTimestamp(rDate), rDate)
       if (room[selectedRoom][createTimestamp(rDate)]) {
         if (room[selectedRoom][createTimestamp(rDate)].status === 'half-day' && count < 1) {
-          count++
-          console.log(count)
+          if (room[selectedRoom][createTimestamp(rDate)].inorout === 'in') {
+            count++
+          }
           return true
         } else {
           return false
