@@ -1,0 +1,41 @@
+<html ng-app="indexApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Hostel</title>
+	<script type="text/javascript" src="./node_modules/angular/angular.min.js"></script>
+	<script type="text/javascript" src="./node_modules/angular-animate/angular-animate.min.js"></script>
+	<script type="text/javascript" src="./node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+	<script type="text/javascript" src="./js/indexController.js"></script>
+	<script type="text/javascript" src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="/css/index.css">
+	<link rel="stylesheet" type="text/css" href="/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css">
+	<link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+</head>
+<body ng-controller="indedxController">
+<div class="btn-group" uib-dropdown is-open="status.isopen">
+      <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+        Button dropdown <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+        <li role="menuitem"><a ng-click="selectRoom('r1')">room1</a></li>
+        <li role="menuitem"><a ng-click="selectRoom('r2')">room2</a></li>
+        <li role="menuitem"><a ng-click="selectRoom('r3')">room3</a></li>
+        <li role="menuitem"><a ng-click="selectRoom('r4')">room4</a></li>
+        <li role="menuitem"><a ng-click="selectRoom('r5')">room5</a></li>
+        <li role="menuitem"><a ng-click="selectRoom('r6')">room6</a></li>
+      </ul>
+    </div>
+<div>
+    <div style="display:inline-block; min-height:290px;">
+      <uib-datepicker ng-model="dt" class="well well-sm" datepicker-options="options"></uib-datepicker>
+    </div>  
+    <div style="display:inline-block; min-height:290px;">
+      <uib-datepicker ng-model="dt2" class="well well-sm" datepicker-options="options2"></uib-datepicker>
+    </div>  
+    <hr />
+    <button type="button" class="btn btn-sm btn-info" ng-click="reserv()">reserv</button>
+</div>
+</body>
+</html>
