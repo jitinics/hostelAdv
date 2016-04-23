@@ -1,3 +1,5 @@
+/* global angular */
+/* global moment*/
 angular.module('indexApp', ['ngAnimate', 'ui.bootstrap']).controller('indedxController', ['$scope', function ($scope) {
   today()
   tomorrow()
@@ -7,6 +9,7 @@ angular.module('indexApp', ['ngAnimate', 'ui.bootstrap']).controller('indedxCont
   }
   $scope.reserv = reserv
   $scope.selectRoom = selectRoom
+  $scope.showSelectedRoom = 'Room 1'
   $scope.room = {
     r1: [],
     r2: [],
@@ -24,27 +27,47 @@ angular.module('indexApp', ['ngAnimate', 'ui.bootstrap']).controller('indedxCont
     r5: [],
     r6: []
   }
+
   function today () {
     $scope.dt = new Date()
   }
+
   function tomorrow () {
     $scope.dt2 = new Date()
     $scope.dt2.setDate($scope.dt2.getDate() + 1)
   }
+
   function selectRoom (room) {
+    if (room === 'r1') {
+      $scope.showSelectedRoom = 'Room 1'
+    } else if (room === 'r2') {
+      $scope.showSelectedRoom = 'Room 2'
+    } else if (room === 'r3') {
+      $scope.showSelectedRoom = 'Room 3'
+    } else if (room === 'r4') {
+      $scope.showSelectedRoom = 'Room 4'
+    } else if (room === 'r5') {
+      $scope.showSelectedRoom = 'Room 5'
+    } else if (room === 'r6') {
+      $scope.showSelectedRoom = 'Room 6'
+    }
     $scope.selectedRoom = room
     setOption()
   }
+
   function reserv () {
     var firstDay = new Date($scope.dt.setHours(0, 0, 0, 0))
     var lastDay = new Date($scope.dt2.setHours(0, 0, 0, 0))
+
+    var momentFistDay = moment(firstDay).format('DD/MM/YYYY')
+    var momentLastDay = moment(lastDay).format('DD/MM/YYYY')
     var reservDate = []
     while (firstDay <= lastDay) {
       reservDate.push(new Date(firstDay))
       firstDay.setDate(firstDay.getDate() + 1)
     }
     if (checkValid(reservDate)) {
-      for (var n = 0; n < reservDate.length;n++) {
+      for (var n = 0; n < reservDate.length; n++) {
         if ($scope.room[$scope.selectedRoom][createTimestamp(reservDate[n])]) {
           $scope.room[$scope.selectedRoom][createTimestamp(reservDate[n])].date = new Date(reservDate[n])
           $scope.room[$scope.selectedRoom][createTimestamp(reservDate[n])].status = 'full-day'
@@ -76,20 +99,26 @@ angular.module('indexApp', ['ngAnimate', 'ui.bootstrap']).controller('indedxCont
             }
           }
         }
-        $scope.detail[$scope.selectedRoom].push({
-          date: new Date(reservDate[n]).toDateString(),
-          cus: {
-            name: $scope.cusName,
-            tel: $scope.cusTel
-          }
-        })
       }
+      $scope.detail[$scope.selectedRoom].push({
+        date: momentFistDay + ' - ' + momentLastDay,
+        cus: {
+          name: $scope.cusName,
+          tel: $scope.cusTel
+        }
+      })
+      $scope.cusName = ''
+      $scope.cusTel = ''
+    } else {
+      window.alert('ไม่สามารถจองได้')
     }
     setOption()
   }
+
   function createTimestamp (time) {
     return Math.round((new Date(time)).getTime() / 1000)
   }
+
   function checkValid (reservDate) {
     var count = 0
     return reservDate.every(function (rDate) {
@@ -109,6 +138,7 @@ angular.module('indexApp', ['ngAnimate', 'ui.bootstrap']).controller('indedxCont
       }
     })
   }
+
   function setOption () {
     $scope.options = {
       customClass: getDayClass,
@@ -125,16 +155,6 @@ angular.module('indexApp', ['ngAnimate', 'ui.bootstrap']).controller('indedxCont
     today()
     tomorrow()
   }
-  // $scope.events = [
-  //   {
-  //     date: tomorrow,
-  //     status: 'full'
-  //   },
-  //   {
-  //     date: afterTomorrow,
-  //     status: 'partially'
-  //   }
-  // ]
 
   function getDayClass (data) {
     var date = data.date
@@ -142,7 +162,7 @@ angular.module('indexApp', ['ngAnimate', 'ui.bootstrap']).controller('indedxCont
     if (mode === 'day') {
       var dayToCheck = new Date(date).setHours(0, 0, 0, 0)
       var keys = Object.keys($scope.room[$scope.selectedRoom])
-      for (var n = 0; n < keys.length;n++) {
+      for (var n = 0; n < keys.length; n++) {
         var currentDay = new Date($scope.room[$scope.selectedRoom][keys[n]].date).setHours(0, 0, 0, 0)
         if (dayToCheck === currentDay) {
           return $scope.room[$scope.selectedRoom][keys[n]].status
@@ -151,13 +171,14 @@ angular.module('indexApp', ['ngAnimate', 'ui.bootstrap']).controller('indedxCont
     }
     return ''
   }
+
   function getDisable (data) {
     var date = data.date
     var mode = data.mode
     if (mode === 'day') {
       var dayToCheck = new Date(date).setHours(0, 0, 0, 0)
       var keys = Object.keys($scope.room[$scope.selectedRoom])
-      for (var n = 0; n < keys.length;n++) {
+      for (var n = 0; n < keys.length; n++) {
         var currentDay = new Date($scope.room[$scope.selectedRoom][keys[n]].date).setHours(0, 0, 0, 0)
         if (dayToCheck === currentDay && $scope.room[$scope.selectedRoom][keys[n]].status === 'full-day') {
           return $scope.room[$scope.selectedRoom][keys[n]].status
