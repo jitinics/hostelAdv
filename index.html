@@ -28,12 +28,12 @@
                         Choose Room <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-                        <li role="menuitem"><a href="#" ng-click="selectRoom('r1')">Room 1</a></li>
-                        <li role="menuitem"><a href="#" ng-click="selectRoom('r2')">Room 2</a></li>
-                        <li role="menuitem"><a href="#" ng-click="selectRoom('r3')">Room 3</a></li>
-                        <li role="menuitem"><a href="#" ng-click="selectRoom('r4')">Room 4</a></li>
-                        <li role="menuitem"><a href="#" ng-click="selectRoom('r5')">Room 5</a></li>
-                        <li role="menuitem"><a href="#" ng-click="selectRoom('r6')">Room 6</a></li>
+                        <li  role="menuitem"><a id="room1" href="#" ng-click="selectRoom('r1')">Room 1</a></li>
+                        <li  role="menuitem"><a id="room2" href="#" ng-click="selectRoom('r2')">Room 2</a></li>
+                        <li  role="menuitem"><a id="room3" href="#" ng-click="selectRoom('r3')">Room 3</a></li>
+                        <li  role="menuitem"><a id="room4" href="#" ng-click="selectRoom('r4')">Room 4</a></li>
+                        <li  role="menuitem"><a id="room5" href="#" ng-click="selectRoom('r5')">Room 5</a></li>
+                        <li  role="menuitem"><a id="room6" href="#" ng-click="selectRoom('r6')">Room 6</a></li>
                     </ul>
                 </div>
             </div>
@@ -59,17 +59,17 @@
             </div>
             <div class="col-md-5">
                 <div class="form-group">
-                    <input type="text" id="room" class="form-control  text-center" ng-model="cusName" placeholder="ชื่อผู้จอง" />
+                    <input type="text" id="cusNameID" class="form-control  text-center" ng-model="cusName" placeholder="ชื่อผู้จอง" />
                 </div>
             </div>
             <div class="col-md-5">
                 <div class="form-group">
-                    <input type="text" id="room" class="form-control  text-center" ng-model="cusTel" placeholder="เบอร์โทร" />
+                    <input type="text" id="cusTelID" class="form-control  text-center" ng-model="cusTel" placeholder="เบอร์โทร" />
                 </div>
             </div>
             <div class="col-md-2">
                 <center>
-                    <div type="button" class="me_buttonReserv" ng-click="reserv()">Reserv</div>
+                    <div id="btnSub" type="button" class="me_buttonReserv" ng-click="reserv()">Reserv</div>
                 </center>
             </div>
         </div>
@@ -85,9 +85,9 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="data in detail[selectedRoom]">
-                            <td>{{data.cus.name}}</td>
-                            <td>{{data.date}}</td>
-                            <td>{{data.cus.tel}}</td>
+                            <td id="namereser-{{$index}}">{{data.cus.name}}</td>
+                            <td id="datereser-{{$index}}">{{data.date}}</td>
+                            <td id="telreser-{{$index}}">{{data.cus.tel}}</td>
                         </tr>
                     </tbody>
                 </table>

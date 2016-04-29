@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha spec.js",
+    "start": "http-server"
   },
   "author": "",
   "license": "ISC",
@@ -15,5 +16,10 @@
     "bootstrap": "^3.3.6",
     "jquery": "^2.2.3",
     "moment": "^2.13.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha-generators": "^1.2.0",
+    "nightmare": "^2.3.3"
   }
 }
